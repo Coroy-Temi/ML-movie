@@ -1,0 +1,201 @@
+@model ML_MOVIE.Models.Settings.SettingsViewModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Settings</p>
+        <h1 class="settings-title">Account preferences and support</h1>
+    </div>
+</section>
+
+@if (TempData["StatusMessage"] is string statusMessage)
+{
+    <div class="status-banner">@statusMessage</div>
+}
+
+<section class="settings-stack">
+    <article class="glass-panel settings-section">
+        <div class="settings-section-head">
+            <div>
+                <p class="eyebrow">Profile</p>
+                <h2>Your profile</h2>
+            </div>
+        </div>
+
+        <form method="post" asp-action="UpdateProfile" class="settings-form two-column">
+            @Html.AntiForgeryToken()
+            <div class="field-block">
+                <label asp-for="Profile.DisplayName"></label>
+                <input asp-for="Profile.DisplayName" class="text-input" />
+                <span asp-validation-for="Profile.DisplayName" class="validation-copy"></span>
+            </div>
+
+            <div class="field-block">
+                <label>Email</label>
+                <input value="@Model.Profile.Email" class="text-input" disabled />
+                <div class="info-chip">@((Model.Profile.IsEmailVerified) ? "Verified" : "Verification required")</div>
+            </div>
+
+            <div class="field-block">
+                <label asp-for="Profile.Theme">Theme</label>
+                <select asp-for="Profile.Theme" class="emotion-select" asp-items="Html.GetEnumSelectList<ML_MOVIE.Models.Settings.ThemeOption>()"></select>
+            </div>
+
+            <div class="field-block">
+                <label>Date joined</label>
+                <div class="text-input static-field">@Model.Profile.CreatedUtc.ToLocalTime().ToString("dd MMMM yyyy")</div>
+            </div>
+
+            <div class="settings-actions">
+                <button type="submit" class="launch-button">Save profile</button>
+            </div>
+        </form>
+    </article>
+
+    <section class="settings-split">
+        <article class="glass-panel settings-section">
+            <div class="settings-section-head">
+                <div>
+                    <p class="eyebrow">Verification</p>
+                    <h2>Email verification</h2>
+                </div>
+            </div>
+            <p class="section-note">Users must verify email before facial emotion recommendations are available.</p>
+            <div class="info-copy">Verification destination: @Model.VerificationDestination</div>
+
+            <form method="post" asp-action="SendVerificationCode" class="inline-form">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="ghost-button">Send code</button>
+            </form>
+
+            <form method="post" asp-action="VerifyEmail" class="settings-form">
+                @Html.AntiForgeryToken()
+                <div class="field-block">
+                    <label asp-for="Verification.Code"></label>
+                    <input asp-for="Verification.Code" class="text-input" />
+                    <span asp-validation-for="Verification.Code" class="validation-copy"></span>
+                </div>
+                <div class="settings-actions">
+                    <button type="submit" class="launch-button">Verify email</button>
+                </div>
+            </form>
+
+            @if (!string.IsNullOrWhiteSpace(Model.OutboxPreview))
+            {
+                <pre class="outbox-preview">@Model.OutboxPreview</pre>
+            }
+        </article>
+
+        <article class="glass-panel settings-section">
+            <div class="settings-section-head">
+                <div>
+                    <p class="eyebrow">Email</p>
+                    <h2>Change email</h2>
+                </div>
+            </div>
+
+            <form method="post" asp-action="ChangeEmail" class="settings-form">
+                @Html.AntiForgeryToken()
+                <div class="field-block">
+                    <label asp-for="EmailChange.NewEmail"></label>
+                    <input asp-for="EmailChange.NewEmail" class="text-input" />
+                    <span asp-validation-for="EmailChange.NewEmail" class="validation-copy"></span>
+                </div>
+                <div class="settings-actions">
+                    <button type="submit" class="launch-button">Change email</button>
+                </div>
+            </form>
+        </article>
+    </section>
+
+    <section class="settings-split">
+        <article class="glass-panel settings-section">
+            <div class="settings-section-head">
+                <div>
+                    <p class="eyebrow">Security</p>
+                    <h2>Change password</h2>
+                </div>
+            </div>
+
+            <form method="post" asp-action="ChangePassword" class="settings-form">
+                @Html.AntiForgeryToken()
+                <div class="field-block">
+                    <label asp-for="Password.CurrentPassword"></label>
+                    <input asp-for="Password.CurrentPassword" class="text-input" />
+                    <span asp-validation-for="Password.CurrentPassword" class="validation-copy"></span>
+                </div>
+
+                <div class="field-block">
+                    <label asp-for="Password.NewPassword"></label>
+                    <input asp-for="Password.NewPassword" class="text-input" />
+                    <span asp-validation-for="Password.NewPassword" class="validation-copy"></span>
+                </div>
+
+                <div class="field-block">
+                    <label asp-for="Password.ConfirmNewPassword"></label>
+                    <input asp-for="Password.ConfirmNewPassword" class="text-input" />
+                    <span asp-validation-for="Password.ConfirmNewPassword" class="validation-copy"></span>
+                </div>
+
+                <div class="settings-actions">
+                    <button type="submit" class="launch-button">Update password</button>
+                </div>
+            </form>
+        </article>
+
+        <article class="glass-panel settings-section">
+            <div class="settings-section-head">
+                <div>
+                    <p class="eyebrow">Contact us</p>
+                    <h2>Suggest improvements</h2>
+                </div>
+            </div>
+
+            <form method="post" asp-action="ContactUs" class="settings-form">
+                @Html.AntiForgeryToken()
+                <div class="field-block">
+                    <label asp-for="ContactUs.Subject"></label>
+                    <input asp-for="ContactUs.Subject" class="text-input" />
+                    <span asp-validation-for="ContactUs.Subject" class="validation-copy"></span>
+                </div>
+
+                <div class="field-block">
+                    <label asp-for="ContactUs.Message"></label>
+                    <textarea asp-for="ContactUs.Message" class="text-input text-area"></textarea>
+                    <span asp-validation-for="ContactUs.Message" class="validation-copy"></span>
+                </div>
+
+                <div class="settings-actions">
+                    <button type="submit" class="launch-button">Send feedback</button>
+                </div>
+            </form>
+        </article>
+    </section>
+
+    <article class="glass-panel settings-section danger-card">
+        <div class="settings-section-head">
+            <div>
+                <p class="eyebrow">Danger zone</p>
+                <h2>Delete account</h2>
+            </div>
+        </div>
+        <p class="section-note">This removes your profile, settings, verification data, and recommendation history.</p>
+        <form method="post" asp-action="DeleteAccount" class="settings-form inline-danger">
+            @Html.AntiForgeryToken()
+            <div class="field-block">
+                <label asp-for="DeleteAccount.Password"></label>
+                <input asp-for="DeleteAccount.Password" class="text-input" />
+                <span asp-validation-for="DeleteAccount.Password" class="validation-copy"></span>
+            </div>
+            <div class="settings-actions">
+                <button type="submit" class="danger-button">Delete account</button>
+            </div>
+        </form>
+    </article>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

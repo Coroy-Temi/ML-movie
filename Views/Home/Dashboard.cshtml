@@ -1,0 +1,216 @@
+@model ML_MOVIE.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Your Dashboard";
+    var discovery = Model.Discovery;
+}
+
+<section class="dashboard-hero">
+    <div class="dashboard-copy glass-panel">
+        <p class="eyebrow">Welcome back</p>
+        <h1>@Model.DisplayName, choose a mood manually or let the camera detect it for you.</h1>
+        <p class="lede">The system now supports two paths: automatic facial-expression detection and manual mood selection. Either way, your recommendation session is saved to your library.</p>
+        <div class="hero-actions">
+            <a class="primary-link" asp-controller="User" asp-action="Library">Open library</a>
+            <a class="secondary-link" asp-controller="User" asp-action="Settings">Open settings</a>
+        </div>
+        <div class="metrics-row">
+            <div><span>Detected mood</span><strong id="hero-detected-mood">@discovery.SelectedEmotion</strong></div>
+            <div><span>Theme</span><strong>@User.GetTheme()</strong></div>
+            <div><span>Email status</span><strong>@(Model.IsEmailVerified ? "Verified" : "Verification required")</strong></div>
+        </div>
+    </div>
+
+    <div class="camera-panel glass-panel">
+        <div class="panel-head">
+            <div>
+                <p class="eyebrow">Facial emotion</p>
+                <h2>Automatic expression detection</h2>
+            </div>
+            <span class="status-dot">Auto</span>
+        </div>
+
+        @if (!Model.IsEmailVerified)
+        {
+            <div class="status-banner warning">
+                Verify your email in <a asp-controller="User" asp-action="Settings">Settings</a> before using facial emotion recommendations.
+            </div>
+        }
+
+        <div class="camera-stage">
+            <video id="camera-preview" autoplay playsinline muted></video>
+            <canvas id="camera-canvas" hidden></canvas>
+            <div class="camera-overlay">
+                <span id="detected-emotion-label">@Model.CameraInput.DetectedEmotion</span>
+                <small id="detected-emotion-source">Start the camera to detect expressions like a smile and convert them into mood-based recommendations.</small>
+            </div>
+        </div>
+
+        <form method="post" asp-action="CaptureEmotion" class="camera-form" id="camera-form">
+            @Html.AntiForgeryToken()
+            <input id="detected-emotion-input" name="DetectedEmotion" type="hidden" value="@Model.CameraInput.DetectedEmotion" />
+            <input id="camera-genre-filters" name="GenreFilters" type="hidden" value="@Model.CameraInput.GenreFilters" />
+            <input id="camera-source-input" name="EmotionSource" type="hidden" value="@Model.CameraInput.EmotionSource" />
+            <input id="capture-data-url" name="CaptureDataUrl" type="hidden" value="@Model.CameraInput.CaptureDataUrl" />
+
+            <div class="camera-actions">
+                <button class="ghost-button" type="button" id="start-camera-button" disabled="@(!Model.IsEmailVerified)">Start camera</button>
+                <button class="ghost-button" type="button" id="capture-frame-button" disabled="@(!Model.IsEmailVerified)">Capture and save</button>
+            </div>
+
+            <div class="mode-note">
+                Automatic detection reads your facial expression for the mood. Choose genres here to shape the movie or series results that come back.
+            </div>
+
+            <div class="field-block">
+                <label class="field-label">Genres for facial recommendations</label>
+                <div class="genre-grid camera-genre-grid">
+                    @foreach (var genre in discovery.AvailableGenres)
+                    {
+                        var isChecked = discovery.SelectedGenres.Contains(genre);
+                        <label class="genre-pill camera-genre-pill @(isChecked ? "checked" : string.Empty)">
+                            @if (isChecked)
+                            {
+                                <input type="checkbox" value="@genre" checked />
+                            }
+                            else
+                            {
+                                <input type="checkbox" value="@genre" />
+                            }
+                            <span>@genre</span>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <button type="submit" class="launch-button full-width" disabled="@(!Model.IsEmailVerified)">Save facial mood session and refresh recommendations</button>
+        </form>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <div class="glass-panel">
+        <div class="section-header compact">
+            <div>
+                <p class="eyebrow">Manual mood</p>
+                <h2>Select an emotion yourself</h2>
+            </div>
+        </div>
+
+        <form method="post" asp-action="ManualRecommendation" class="recommend-form" id="manual-recommend-form">
+            @Html.AntiForgeryToken()
+            <label class="field-label" for="emotion">Emotion</label>
+            <select id="emotion" name="emotion" class="emotion-select">
+                @foreach (var emotion in discovery.Emotions)
+                {
+                    if (emotion.Emotion == discovery.SelectedEmotion)
+                    {
+                        <option value="@emotion.Emotion" selected>@emotion.Title</option>
+                    }
+                    else
+                    {
+                        <option value="@emotion.Emotion">@emotion.Title</option>
+                    }
+                }
+            </select>
+
+            <label class="field-label">Genres</label>
+            <div class="genre-grid">
+                @foreach (var genre in discovery.AvailableGenres)
+                {
+                    var isChecked = discovery.SelectedGenres.Contains(genre);
+                    <label class="genre-pill manual-genre-pill @(isChecked ? "checked" : string.Empty)">
+                        @if (isChecked)
+                        {
+                            <input type="checkbox" name="genres" value="@genre" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="genres" value="@genre" />
+                        }
+                        <span>@genre</span>
+                    </label>
+                }
+            </div>
+
+            <button type="submit" class="launch-button">Save manual mood and show recommendations</button>
+        </form>
+    </div>
+
+    <div class="glass-panel">
+        <div class="section-header compact">
+            <div>
+                <p class="eyebrow">Recent runs</p>
+                <h2>Latest recommendation sessions</h2>
+            </div>
+        </div>
+
+        <div class="session-list" id="recent-sessions-root">
+            @if (Model.RecentSessions.Count == 0)
+            {
+                <p class="section-note">No saved sessions yet. Use the automatic detector or manual mood flow to start building your library.</p>
+            }
+            else
+            {
+                @foreach (var session in Model.RecentSessions)
+                {
+                    <article class="session-card">
+                        <div class="session-topline">
+                            <strong>@session.DetectedEmotion</strong>
+                            <span>@session.CreatedUtc.ToLocalTime().ToString("dd MMM yyyy, HH:mm")</span>
+                        </div>
+                        <p>@session.EmotionSource</p>
+                        <small>Filters: @session.GenreFilters</small>
+                        <small>Recommended: @session.RecommendedTitles</small>
+                    </article>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Emotion-matched results</p>
+        <h2 id="results-title">@discovery.MovieCount recommendations for @discovery.SelectedEmotion</h2>
+    </div>
+    <p class="section-note">The engine now prioritizes titles whose dominant emotional profile matches the selected mood.</p>
+</section>
+
+@if (!string.IsNullOrWhiteSpace(discovery.EmptyStateMessage))
+{
+    <div class="status-banner empty-state" id="results-empty-state">@discovery.EmptyStateMessage</div>
+}
+else
+{
+    <div class="status-banner empty-state" id="results-empty-state" hidden></div>
+}
+
+<section class="movie-grid @(discovery.Recommendations.Count == 0 ? "is-empty" : string.Empty)">
+    <div id="movie-grid-root" class="movie-grid-inner">
+        @foreach (var item in discovery.Recommendations)
+    {
+            <article class="movie-card">
+                <div class="movie-poster" style="background-image: url('@item.Movie.PosterUrl');"></div>
+                <div class="movie-body">
+                    <div class="movie-topline">
+                        <span>@item.Movie.ReleaseYear</span>
+                        <span>@item.Movie.RuntimeMinutes min</span>
+                        <span>@item.Movie.Rating.ToString("0.0")/10</span>
+                    </div>
+                    <h3>@item.Movie.Title</h3>
+                    <p class="genres">@item.Movie.Genres.Replace("|", " / ")</p>
+                    <p class="overview">@item.Movie.Overview</p>
+                    <p class="reason">@item.Reason</p>
+                    <div class="movie-footer">
+                        <span class="score-badge">Match @item.Score.ToString("0.0")</span>
+                        <span class="streaming-hint">@item.Movie.StreamingHint</span>
+                    </div>
+                </div>
+            </article>
+    }
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/@@vladmandic/face-api/dist/face-api.js"></script>
+}

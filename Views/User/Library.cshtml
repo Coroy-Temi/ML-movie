@@ -1,0 +1,37 @@
+@model ML_MOVIE.Models.LibraryViewModel
+@{
+    ViewData["Title"] = "Library";
+}
+
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Library</p>
+        <h1 class="settings-title">@Model.DisplayName's recommendation history</h1>
+    </div>
+    <a class="secondary-link" asp-controller="Home" asp-action="Dashboard">Back to dashboard</a>
+</section>
+
+<section class="library-grid">
+    @if (Model.Sessions.Count == 0)
+    {
+        <article class="glass-panel settings-card">
+            <h2>No recommendations yet</h2>
+            <p class="section-note">Your saved movie recommendation runs will appear here after you use the dashboard.</p>
+        </article>
+    }
+    else
+    {
+        @foreach (var session in Model.Sessions)
+        {
+            <article class="glass-panel library-card">
+                <div class="session-topline">
+                    <strong>@session.DetectedEmotion</strong>
+                    <span>@session.CreatedUtc.ToLocalTime().ToString("dd MMM yyyy, HH:mm")</span>
+                </div>
+                <p>@session.EmotionSource</p>
+                <small>Genre filters: @session.GenreFilters</small>
+                <small>Recommended titles: @session.RecommendedTitles</small>
+            </article>
+        }
+    }
+</section>

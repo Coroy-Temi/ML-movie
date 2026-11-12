@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MoviePulse</title>
+    <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ML_MOVIE.styles.css" asp-append-version="true" />
+</head>
+<body data-theme="@User.GetTheme()">
+    <div class="page-backdrop"></div>
+    <header class="site-header">
+        <a class="brandmark" asp-controller="Home" asp-action="Index">
+            <span class="brandmark-kicker">MP</span>
+            <span class="brandmark-copy">
+                <strong>MoviePulse</strong>
+                <small>Facial emotion movie recommendations</small>
+            </span>
+        </a>
+
+        <nav class="site-nav">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                <a asp-controller="User" asp-action="Library">Library</a>
+                <a asp-controller="User" asp-action="Settings">Settings</a>
+                @if (User.IsAdmin())
+                {
+                    <a asp-controller="Admin" asp-action="Index">Admin</a>
+                }
+            }
+            <a asp-controller="Home" asp-action="Privacy">Notes</a>
+        </nav>
+
+        <div class="nav-actions">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <span class="user-chip">@User.Identity?.Name</span>
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="ghost-button">Logout</button>
+                </form>
+            }
+            else
+            {
+                <a class="ghost-button as-link" asp-controller="Account" asp-action="Index">Login / Register</a>
+            }
+        </div>
+    </header>
+
+    <main class="page-shell">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

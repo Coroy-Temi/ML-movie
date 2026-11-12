@@ -1,0 +1,123 @@
+sampleId,expressionLabel,dominantEmotion,confidence,smileScore,browTension,eyeOpenness,notes
+F001,broad_smile,Happy,0.97,0.96,0.08,0.73,Wide smile with bright eyes and lifted cheeks
+F002,joyful_grin,Happy,0.95,0.92,0.09,0.69,Confident grin with relaxed brow line
+F003,laughing_face,Happy,0.94,0.88,0.11,0.78,Open joyful smile with visible energy
+F004,content_smile,Happy,0.90,0.79,0.12,0.64,Soft positive expression with cheek lift
+F005,playful_smirk,Happy,0.87,0.71,0.16,0.60,Light smirk and slightly raised cheeks
+F006,gentle_smile,Happy,0.86,0.68,0.14,0.58,Calm smile suited to easygoing happiness
+F007,tearful_gaze,Sad,0.94,0.06,0.74,0.39,Heavy brow tension with lowered mouth
+F008,frowning_face,Sad,0.92,0.08,0.79,0.43,Classic frown with reduced cheek lift
+F009,downcast_look,Sad,0.89,0.10,0.66,0.36,Low-energy eyes and withdrawn mouth posture
+F010,quivering_lip,Sad,0.86,0.07,0.69,0.40,Emotional sadness with compressed lips
+F011,reflective_sadness,Sad,0.84,0.12,0.58,0.34,Subtle sorrow and softer facial tension
+F012,lonely_expression,Sad,0.82,0.05,0.63,0.31,Quiet sadness with flat cheek position
+F013,wide_eyed_surprise,Excited,0.95,0.42,0.19,0.94,Very open eyes and dropped jaw
+F014,thrilled_smile,Excited,0.93,0.66,0.18,0.89,Smile mixed with alert excited eyes
+F015,amazed_reaction,Excited,0.92,0.37,0.17,0.97,High-energy surprise and lifted brows
+F016,celebration_face,Excited,0.91,0.74,0.15,0.83,Excited celebration with open mouth
+F017,pumped_expression,Excited,0.89,0.59,0.23,0.81,Focused excitement with rising brows
+F018,anticipation_glow,Excited,0.85,0.46,0.21,0.79,Expectation and heightened attention
+F019,soft_smile,Relaxed,0.88,0.56,0.10,0.61,Gentle smile and calm expression
+F020,serene_face,Relaxed,0.86,0.42,0.08,0.52,Peaceful face with low tension
+F021,neutral_calm,Relaxed,0.84,0.28,0.09,0.48,Balanced neutral look and steady eyes
+F022,rested_expression,Relaxed,0.82,0.34,0.07,0.50,Rested features and composed mouth
+F023,peaceful_gaze,Relaxed,0.81,0.31,0.11,0.54,Easy brow line and light cheek movement
+F024,cozy_smile,Relaxed,0.80,0.47,0.12,0.57,Low-intensity smile with soft eyes
+F025,affectionate_smile,Romantic,0.93,0.69,0.12,0.62,Tender smile with warm eye contact
+F026,loving_gaze,Romantic,0.92,0.58,0.10,0.59,Soft attention and subtle smile
+F027,blushing_smile,Romantic,0.89,0.64,0.11,0.57,Cheek lift with gentle jaw posture
+F028,tender_expression,Romantic,0.87,0.53,0.13,0.55,Affectionate face with relaxed eyes
+F029,soft_connection,Romantic,0.84,0.49,0.14,0.52,Small smile and calm engaged gaze
+F030,daydreaming_romance,Romantic,0.82,0.44,0.16,0.50,Reflective romantic look
+F031,raised_brow_focus,Curious,0.91,0.13,0.46,0.70,One brow raised and intent eyes
+F032,questioning_look,Curious,0.89,0.11,0.42,0.74,Investigative stare with slight lip press
+F033,analytic_stare,Curious,0.86,0.08,0.40,0.68,Sharp eyes and thoughtful mouth posture
+F034,inquisitive_smirk,Curious,0.84,0.19,0.36,0.66,Subtle smirk with lifted brows
+F035,puzzled_expression,Curious,0.83,0.10,0.50,0.63,Problem-solving face with brow activity
+F036,observant_face,Curious,0.81,0.14,0.39,0.72,Measured attention and curiosity
+F037,gritty_stare,Fearless,0.92,0.05,0.84,0.56,Tense muscles and determined focus
+F038,intense_face,Fearless,0.90,0.07,0.79,0.59,Firm jaw and fearless gaze
+F039,defiant_expression,Fearless,0.88,0.09,0.74,0.54,Strong brow tension with resolve
+F040,combat_ready,Fearless,0.86,0.04,0.88,0.61,Prepared and unshaken expression
+F041,braced_reaction,Fearless,0.83,0.06,0.70,0.58,Controlled toughness and tension
+F042,unyielding_stare,Fearless,0.82,0.03,0.76,0.53,Steady fearless posture
+F043,hopeful_smile,Inspired,0.91,0.61,0.16,0.66,Upward expression with energized eyes
+F044,determined_glow,Inspired,0.89,0.47,0.20,0.71,Resolve mixed with optimism
+F045,visionary_look,Inspired,0.88,0.39,0.18,0.75,Forward-looking gaze and lifted brow
+F046,confident_smile,Inspired,0.87,0.55,0.15,0.69,Motivated and composed expression
+F047,rising_motivation,Inspired,0.85,0.43,0.19,0.67,Ambition with focused brightness
+F048,uplifted_face,Inspired,0.83,0.50,0.17,0.64,Warm inspiration and cheek lift
+F049,off_angle_smile,Happy,0.84,0.73,0.18,0.56,Webcam smile from a slight side angle
+F050,dim_room_grin,Happy,0.78,0.69,0.21,0.49,Low-light grin with reduced eye detail
+F051,partial_frame_laugh,Happy,0.80,0.82,0.17,0.58,Lower face dominant smile near frame edge
+F052,glasses_smile,Happy,0.79,0.66,0.19,0.47,Smile partly hidden by glasses glare
+F053,head_tilt_smirk,Happy,0.76,0.61,0.22,0.51,Uneven cheek lift and tilted posture
+F054,soft_webcam_smile,Happy,0.74,0.58,0.20,0.46,Subtle smile from laptop camera
+F055,night_screen_smile,Happy,0.72,0.55,0.23,0.43,Screen-lit face with gentle grin
+F056,motion_blur_smile,Happy,0.70,0.63,0.24,0.52,Smile captured with light movement blur
+F057,tearful_webcam_face,Sad,0.81,0.07,0.61,0.29,Low-light sadness with narrowed eyes
+F058,soft_frown_zoom,Sad,0.79,0.09,0.57,0.32,Small frown on a video-call camera
+F059,downward_glance_sad,Sad,0.77,0.05,0.64,0.27,Head lowered and eyes partly closed
+F060,blurry_sadness,Sad,0.73,0.10,0.54,0.31,Motion blur with visible brow strain
+F061,glasses_frown,Sad,0.75,0.08,0.59,0.30,Frown with eye detail partly occluded
+F062,tired_sad_face,Sad,0.71,0.06,0.52,0.24,Webcam fatigue and soft sorrow
+F063,side_lit_frown,Sad,0.69,0.11,0.56,0.28,One side of face darker than the other
+F064,compressed_lips_sad,Sad,0.74,0.04,0.60,0.26,Lip press and shrinking eye openness
+F113,watery_eyes_sad,Sad,0.83,0.05,0.68,0.23,Visible eye shrink and low mouth energy
+F114,after_cry_frown,Sad,0.82,0.03,0.72,0.21,Cheeks dropped and brows tense after crying
+F115,slumped_webcam_sad,Sad,0.80,0.06,0.63,0.22,Low posture and tired narrowed eyes
+F116,soft_grief_face,Sad,0.78,0.04,0.66,0.20,Quiet sadness with reduced cheek lift
+F117,flat_mouth_sadness,Sad,0.76,0.02,0.61,0.19,Flattened mouth and shrinking eye openness
+F118,late_night_sad_face,Sad,0.75,0.05,0.58,0.18,Dim screen light and heavy eyelids
+F119,phone_camera_frown,Sad,0.73,0.07,0.55,0.25,Front camera frown with slight blur
+F120,glassy_look_sad,Sad,0.72,0.04,0.64,0.22,Glassy eyes and withdrawn mouth posture
+F121,side_profile_sad,Sad,0.70,0.03,0.60,0.20,Partial profile with sad eye squeeze
+F122,quiet_disappointment,Sad,0.69,0.08,0.53,0.24,Muted frown and low-energy gaze
+F065,open_mouth_surprise,Excited,0.85,0.44,0.18,0.88,Webcam surprise with visible jaw drop
+F066,celebration_yell,Excited,0.83,0.62,0.19,0.82,Excited shout with motion in the frame
+F067,bright_eyes_hype,Excited,0.81,0.51,0.20,0.86,Anticipation with very open eyes
+F068,lean_in_reaction,Excited,0.79,0.47,0.22,0.79,Face leaning close to the webcam
+F069,tilted_surprise,Excited,0.76,0.35,0.18,0.91,Head tilt and widened eyes
+F070,glasses_surprise,Excited,0.73,0.39,0.24,0.84,Surprised reaction with glasses reflection
+F071,grainy_hype_face,Excited,0.72,0.43,0.23,0.76,Noisier webcam frame and excitement
+F072,late_night_reaction,Excited,0.70,0.32,0.21,0.74,Excitement in dim screen lighting
+F073,quiet_neutral_relaxed,Relaxed,0.79,0.27,0.11,0.41,Still face on a steady webcam
+F074,sofa_relaxed_face,Relaxed,0.77,0.30,0.09,0.45,Comfortable low-energy expression
+F075,slight_smile_relaxed,Relaxed,0.75,0.36,0.12,0.48,Almost neutral with mild warmth
+F076,reading_face_relaxed,Relaxed,0.73,0.22,0.10,0.44,Soft eyes and calm mouth posture
+F077,screen_glow_relaxed,Relaxed,0.71,0.29,0.13,0.39,Dim monitor light and restful face
+F078,resting_pose_relaxed,Relaxed,0.69,0.24,0.12,0.42,Low movement and low tension
+F079,angled_calm_face,Relaxed,0.68,0.31,0.14,0.40,Slight head angle with easy features
+F080,bland_webcam_rest,Relaxed,0.66,0.20,0.11,0.37,Neutral resting webcam look
+F081,soft_affection_smile,Romantic,0.80,0.54,0.15,0.49,Small smile with warm attention
+F082,screen_call_romance,Romantic,0.78,0.49,0.14,0.46,Video call gaze with gentle smile
+F083,tilted_tender_face,Romantic,0.76,0.45,0.16,0.44,Head tilt and calm connection
+F084,blush_like_smile,Romantic,0.74,0.57,0.17,0.43,Cheek lift with soft mouth opening
+F085,dim_light_tenderness,Romantic,0.72,0.41,0.15,0.41,Low-light affectionate expression
+F086,subtle_eye_contact,Romantic,0.70,0.38,0.13,0.45,Quiet smile and focused eye contact
+F087,soft_lips_romance,Romantic,0.68,0.35,0.18,0.42,Tender mouth posture and calm eyes
+F088,quiet_partner_smile,Romantic,0.67,0.43,0.14,0.40,Gentle warmth from webcam perspective
+F089,raised_brow_question,Curious,0.80,0.11,0.37,0.61,Clear raised brow and fixed gaze
+F090,close_up_curious,Curious,0.78,0.13,0.33,0.67,Face close to camera in a questioning look
+F091,one_eye_squint_question,Curious,0.75,0.09,0.35,0.58,Slight squint and lifted brow
+F092,glasses_inquiry,Curious,0.73,0.12,0.31,0.64,Investigative look behind glasses
+F093,dim_room_curiosity,Curious,0.70,0.10,0.36,0.55,Curiosity in grainy lighting
+F094,puzzled_webcam_face,Curious,0.71,0.08,0.42,0.57,Thinking face with forehead activity
+F095,head_forward_curious,Curious,0.68,0.15,0.38,0.62,User leans toward the screen
+F096,quiet_observer,Curious,0.66,0.14,0.29,0.60,Low-smile high-attention expression
+F097,locked_in_stare,Fearless,0.81,0.04,0.71,0.47,Steady intense look under flat lighting
+F098,grim_focus,Fearless,0.79,0.06,0.76,0.51,Tight brow and stubborn jaw
+F099,side_angle_intensity,Fearless,0.77,0.05,0.69,0.49,Determined face from off-center webcam
+F100,glare_hardened_face,Fearless,0.75,0.03,0.74,0.45,Strong brow line with screen glare
+F101,low_light_defiance,Fearless,0.73,0.02,0.66,0.43,Dark frame and tense features
+F102,braced_webcam_face,Fearless,0.71,0.07,0.63,0.48,Controlled tension and fixed gaze
+F103,compressed_toughness,Fearless,0.69,0.05,0.68,0.44,Lips pressed with intense eyes
+F104,edge_frame_stare,Fearless,0.67,0.04,0.72,0.46,Partial frame with determined expression
+F105,bright_hopeful_face,Inspired,0.79,0.46,0.18,0.63,Open attentive face with upward feel
+F106,motivated_webcam_smile,Inspired,0.77,0.51,0.17,0.59,Subtle smile and alert eyes
+F107,goal_focused_expression,Inspired,0.75,0.34,0.21,0.66,Forward-facing determination
+F108,screen_glow_inspired,Inspired,0.74,0.39,0.19,0.61,Monitor-lit ambition and lift
+F109,soft_confident_face,Inspired,0.72,0.43,0.16,0.57,Confidence without strong grin
+F110,upward_brow_motivation,Inspired,0.70,0.31,0.20,0.68,Brows raised with focused calm
+F111,hope_after_pause,Inspired,0.68,0.36,0.18,0.55,Reflective energy from webcam frame
+F112,quiet_drive_face,Inspired,0.67,0.28,0.22,0.60,Determination with mild cheek lift

@@ -1,0 +1,141 @@
+@model ML_MOVIE.Models.Admin.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Control homepage updates and watch the app grow</h1>
+    </div>
+    <p class="section-note">Use this space to manage homepage news, feature launches, and the core activity stats for MoviePulse.</p>
+</section>
+
+@if (TempData["StatusMessage"] is string statusMessage && !string.IsNullOrWhiteSpace(statusMessage))
+{
+    <div class="status-banner">@statusMessage</div>
+}
+
+<section class="admin-stats">
+    <article class="glass-panel admin-stat-card">
+        <span>Total users</span>
+        <strong>@Model.UserCount</strong>
+    </article>
+    <article class="glass-panel admin-stat-card">
+        <span>Verified users</span>
+        <strong>@Model.VerifiedUserCount</strong>
+    </article>
+    <article class="glass-panel admin-stat-card">
+        <span>Saved sessions</span>
+        <strong>@Model.SessionCount</strong>
+    </article>
+    <article class="glass-panel admin-stat-card">
+        <span>Contact messages</span>
+        <strong>@Model.ContactMessageCount</strong>
+    </article>
+</section>
+
+<section class="admin-grid">
+    <div class="glass-panel admin-card">
+        <div class="section-header compact">
+            <div>
+                <p class="eyebrow">Homepage</p>
+                <h2>Create latest news or feature cards</h2>
+            </div>
+        </div>
+
+        <form method="post" asp-action="CreateHomepageUpdate" class="settings-form">
+            @Html.AntiForgeryToken()
+
+            <div class="field-block">
+                <label asp-for="NewUpdate.Title" class="field-label"></label>
+                <input asp-for="NewUpdate.Title" class="text-input" />
+                <span asp-validation-for="NewUpdate.Title" class="validation-copy"></span>
+            </div>
+
+            <div class="field-block">
+                <label asp-for="NewUpdate.Category" class="field-label"></label>
+                <input asp-for="NewUpdate.Category" class="text-input" />
+                <span asp-validation-for="NewUpdate.Category" class="validation-copy"></span>
+            </div>
+
+            <div class="field-block">
+                <label asp-for="NewUpdate.Body" class="field-label"></label>
+                <textarea asp-for="NewUpdate.Body" class="text-area"></textarea>
+                <span asp-validation-for="NewUpdate.Body" class="validation-copy"></span>
+            </div>
+
+            <label class="check-row">
+                <input asp-for="NewUpdate.IsPublished" />
+                <span>Publish immediately</span>
+            </label>
+
+            <div class="settings-actions">
+                <button type="submit" class="launch-button">Save homepage update</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="glass-panel admin-card">
+        <div class="section-header compact">
+            <div>
+                <p class="eyebrow">Permissions</p>
+                <h2>Grant admin access by Gmail</h2>
+            </div>
+        </div>
+
+        <form method="post" asp-action="GrantAdmin" class="settings-form">
+            @Html.AntiForgeryToken()
+            <div class="field-block">
+                <label asp-for="GrantAdmin.Email" class="field-label"></label>
+                <input asp-for="GrantAdmin.Email" class="text-input" placeholder="name@gmail.com" />
+                <span asp-validation-for="GrantAdmin.Email" class="validation-copy"></span>
+            </div>
+
+            <div class="settings-actions">
+                <button type="submit" class="launch-button">Grant admin access</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="glass-panel admin-card">
+        <div class="section-header compact">
+            <div>
+                <p class="eyebrow">Live feed</p>
+                <h2>Homepage cards</h2>
+            </div>
+        </div>
+
+        <div class="admin-update-list">
+            @if (Model.Updates.Count == 0)
+            {
+                <p class="section-note">No homepage updates yet.</p>
+            }
+            else
+            {
+                @foreach (var update in Model.Updates)
+                {
+                    <article class="admin-update-card">
+                        <div class="session-topline">
+                            <strong>@update.Title</strong>
+                            <span>@update.CreatedUtc.ToLocalTime().ToString("dd MMM yyyy")</span>
+                        </div>
+                        <p class="genres">@update.Category</p>
+                        <p>@update.Body</p>
+                        <div class="admin-update-actions">
+                            <span class="info-chip">@(update.IsPublished ? "Published" : "Hidden")</span>
+                            <form method="post" asp-action="ToggleHomepageUpdate" asp-route-id="@update.Id">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="ghost-button">@(update.IsPublished ? "Hide" : "Publish")</button>
+                            </form>
+                            <form method="post" asp-action="DeleteHomepageUpdate" asp-route-id="@update.Id">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="danger-button">Delete</button>
+                            </form>
+                        </div>
+                    </article>
+                }
+            }
+        </div>
+    </div>
+</section>

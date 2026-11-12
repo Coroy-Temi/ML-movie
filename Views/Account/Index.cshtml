@@ -1,0 +1,70 @@
+@model ML_MOVIE.Models.Auth.AuthViewModel
+@{
+    ViewData["Title"] = "Account";
+}
+
+<section class="auth-shell">
+    <div class="auth-copy glass-panel">
+        <p class="eyebrow">Access MoviePulse</p>
+        <h1>Sign in and pick up your movie mood instantly.</h1>
+        @if (TempData["StatusMessage"] is string statusMessage)
+        {
+            <div class="status-banner">@statusMessage</div>
+        }
+    </div>
+
+    <div class="auth-grid">
+        <section class="glass-panel auth-card">
+            <p class="eyebrow">Sign in</p>
+            <h2>Welcome back</h2>
+            <form method="post" asp-action="Login" class="auth-form">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="validation-copy"></div>
+                <label asp-for="Login.Email"></label>
+                <input asp-for="Login.Email" class="text-input" />
+                <span asp-validation-for="Login.Email" class="validation-copy"></span>
+
+                <label asp-for="Login.Password"></label>
+                <input asp-for="Login.Password" class="text-input" />
+                <span asp-validation-for="Login.Password" class="validation-copy"></span>
+
+                <label class="check-row">
+                    <input asp-for="Login.RememberMe" />
+                    <span>Keep me signed in</span>
+                </label>
+
+                <button type="submit" class="launch-button">Sign in</button>
+            </form>
+        </section>
+
+        <section class="glass-panel auth-card">
+            <p class="eyebrow">Register</p>
+            <h2>Create your account</h2>
+            <form method="post" asp-action="Register" class="auth-form">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="validation-copy"></div>
+                <label asp-for="Register.DisplayName"></label>
+                <input asp-for="Register.DisplayName" class="text-input" />
+                <span asp-validation-for="Register.DisplayName" class="validation-copy"></span>
+
+                <label asp-for="Register.Email"></label>
+                <input asp-for="Register.Email" class="text-input" />
+                <span asp-validation-for="Register.Email" class="validation-copy"></span>
+
+                <label asp-for="Register.Password"></label>
+                <input asp-for="Register.Password" class="text-input" />
+                <span asp-validation-for="Register.Password" class="validation-copy"></span>
+
+                <label asp-for="Register.ConfirmPassword"></label>
+                <input asp-for="Register.ConfirmPassword" class="text-input" />
+                <span asp-validation-for="Register.ConfirmPassword" class="validation-copy"></span>
+
+                <button type="submit" class="launch-button">Register</button>
+            </form>
+        </section>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

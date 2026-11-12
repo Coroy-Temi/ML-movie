@@ -1,0 +1,98 @@
+@model ML_MOVIE.Models.HomeViewModel
+@{
+    ViewData["Title"] = "MoviePulse";
+    var totalUsers = ViewData["TotalUsers"] is int value ? value : 0;
+}
+
+<section class="landing-hero">
+    <div class="landing-copy glass-panel">
+        <p class="eyebrow">Facial emotion movie platform</p>
+        <h1>Recommendations that react to your expression, not just your genre history.</h1>
+        <p class="lede">
+            MoviePulse combines a movie metadata catalog, emotion signals, camera-assisted facial check-ins, and account-based history so each user gets recommendations tuned to their current mood.
+        </p>
+        <div class="hero-actions">
+            <a class="primary-link" asp-controller="Account" asp-action="Index">Sign in or register</a>
+            <a class="secondary-link" asp-controller="Home" asp-action="Privacy">Architecture notes</a>
+        </div>
+        <div class="metrics-row">
+            <div><span>Catalog</span><strong>@Model.CatalogSize titles</strong></div>
+            <div><span>Datasets</span><strong>@Model.Datasets.Count connected</strong></div>
+            <div><span>Users</span><strong>@totalUsers registered</strong></div>
+        </div>
+    </div>
+
+    <div class="landing-stack">
+        @if (Model.HomepageUpdates.Count == 0)
+        {
+            <article class="spotlight-card warm">
+                <span class="spotlight-tag">Latest news</span>
+                <h2>MoviePulse updates will appear here as soon as an admin publishes them.</h2>
+                <p class="spotlight-body">Use the admin area to highlight new features, platform milestones, or what is coming next.</p>
+            </article>
+        }
+        else
+        {
+            @for (var index = 0; index < Model.HomepageUpdates.Count; index++)
+            {
+                var update = Model.HomepageUpdates[index];
+                <article class="spotlight-card @(index % 2 == 0 ? "warm" : "cool")">
+                    <span class="spotlight-tag">@update.Category</span>
+                    <h2>@update.Title</h2>
+                    <p class="spotlight-body">@update.Body</p>
+                </article>
+            }
+        }
+    </div>
+</section>
+
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Preview feed</p>
+        <h2>What the experience recommends by default</h2>
+    </div>
+    <p class="section-note">Once users log in, they get the full dashboard with camera capture, saved sessions, and personalized emotion-driven recommendation runs.</p>
+</section>
+
+<section class="movie-grid">
+    @foreach (var item in Model.Recommendations)
+    {
+        <article class="movie-card">
+            <div class="movie-poster" style="background-image: url('@item.Movie.PosterUrl');"></div>
+            <div class="movie-body">
+                <div class="movie-topline">
+                    <span>@item.Movie.ReleaseYear</span>
+                    <span>@item.Movie.RuntimeMinutes min</span>
+                    <span>@item.Movie.Rating.ToString("0.0")/10</span>
+                </div>
+                <h3>@item.Movie.Title</h3>
+                <p class="genres">@item.Movie.Genres.Replace("|", " / ")</p>
+                <p class="overview">@item.Movie.Overview</p>
+                <p class="reason">@item.Reason</p>
+            </div>
+        </article>
+    }
+</section>
+
+<section class="dataset-grid">
+    @foreach (var dataset in Model.Datasets)
+    {
+        <article class="dataset-card">
+            <div class="dataset-status @(dataset.IsLoaded ? "loaded" : "missing")">
+                @(dataset.IsLoaded ? "Loaded" : "Missing")
+            </div>
+            <h3>@dataset.Name</h3>
+            <p>@dataset.Description</p>
+            <dl>
+                <div>
+                    <dt>File</dt>
+                    <dd>@dataset.FileName</dd>
+                </div>
+                <div>
+                    <dt>Rows</dt>
+                    <dd>@dataset.RowCount</dd>
+                </div>
+            </dl>
+        </article>
+    }
+</section>

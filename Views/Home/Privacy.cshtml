@@ -1,0 +1,11 @@
+@{
+    ViewData["Title"] = "Platform Notes";
+}
+
+<section class="privacy-panel glass-panel">
+    <p class="eyebrow">Platform notes</p>
+    <h1>How the upgraded app is structured</h1>
+    <p>The project uses ASP.NET Core MVC with Razor views, custom CSS/JS, a SQLite database, and a service layer for recommendation logic.</p>
+    <p>User accounts are stored in SQLite now so development stays simple. When ready for deployment the data layer will be switched to SQL Server.</p>
+    <p>The camera flow is designed as a facial emotion check-in prototype: browser camera capture confirms a current expression, then the C# backend saves the session and refreshes recommendations using the emotion-aware catalog service.</p>
+</section>
